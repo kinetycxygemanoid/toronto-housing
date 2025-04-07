@@ -1,0 +1,39 @@
+# Toronto Housing Visualizations Generator
+# Save this as generate_visualizations.py
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import os
+
+# Sample Toronto housing data
+data = {
+    'Area': [1200, 1500, 1800, 2000, 2200, 2400],
+    'Price': [750000, 850000, 920000, 1100000, 1250000, 1300000],
+    'Location': ['Downtown', 'Suburb', 'Downtown', 'Suburb', 'Downtown', 'Suburb']
+}
+df = pd.DataFrame(data)
+
+# Create visualizations folder if it doesn't exist
+os.makedirs('visualizations', exist_ok=True)
+
+# Plot 1: Price vs Area
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x='Area', y='Price', hue='Location', data=df, s=100, palette='viridis')
+plt.title('Toronto: Price vs. Square Footage', fontsize=14)
+plt.xlabel('Area (sq ft)', fontsize=12)
+plt.ylabel('Price (CAD$)', fontsize=12)
+plt.grid(True, alpha=0.3)
+plt.savefig('visualizations/price_vs_area.png', dpi=300, bbox_inches='tight')
+plt.close()
+
+# Plot 2: Price by Location
+plt.figure(figsize=(8, 5))
+sns.barplot(x='Location', y='Price', data=df, palette='coolwarm')
+plt.title('Average Price by Location', fontsize=14)
+plt.xlabel('Neighborhood', fontsize=12)
+plt.ylabel('Average Price (CAD$)', fontsize=12)
+plt.savefig('visualizations/price_by_location.png', dpi=300, bbox_inches='tight')
+plt.close()
+
+print("Success! Created 2 visualization files in /visualizations folder")
